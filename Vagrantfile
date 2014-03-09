@@ -6,11 +6,14 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu-12.04-amd64"
+  
+  # cf. https://cloud-images.ubuntu.com/vagrant/
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box"
 
   config.vm.provider :virtualbox do |provider, override|
     override.vm.provision :shell, :inline => <<-EOS.gsub(/^\s+\|/, '')
       |# Install dokku
+      |# cf. https://github.com/progrium/dokku/
       |wget -q -O - https://raw.github.com/progrium/dokku/v0.2.2/bootstrap.sh | sudo DOKKU_TAG=v0.2.2 bash
       |
       |echo 'Done provisioning!!!!!'
